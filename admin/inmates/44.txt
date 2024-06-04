@@ -1,0 +1,139 @@
+ <div class="card-body">
+							 <div class="row">
+							 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+								<label for="call_name">Prison & Cell Block</label>
+                                    <select class="required form-control" name="cell_id" id="call_name"  >
+									<option value="" <?= !isset($cell_id) ? 'selected' : '' ?>></option>
+                                            <?php 
+                                            $cells = $conn->query("SELECT c.*, p.name as `prison` FROM `cell_list` c inner join prison_list p on c.prison_id = p.id where c.delete_flag = 0 and c.`status` = 1 order by c.`name` asc ");
+                                            while($row = $cells->fetch_assoc()):
+                                            ?>
+                                            <option value="<?= $row['id'] ?>" <?= isset($cell_id) && $cell_id == $row['id'] ? 'selected' : '' ?>><?= $row['prison'] . " - " . $row['name'] ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                               
+                            </div>
+							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							<label for="userName">Birthday</label>
+                                    <input type="date" class="required form-control" name="dob" id="dob" required="required" value="<?= isset($dob) ? $dob : "" ?>">
+                               
+                            </div>
+							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <label for="marital_status" class="control-label">Geneder</label>
+                                    <select class="required form-control" name="sex" id="" required="required">
+                                    <option value="Single" <?= isset($marital_status) && $marital_status == 'Single' ? 'selected' : '' ?>>Male</option>
+                                    <option value="Married" <?= isset($marital_status) && $marital_status == 'Married' ? 'selected' : '' ?>>Female</option>
+                                    </select>
+                            </div>
+							</div>
+							<div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <label for="marital_status" class="control-label">Marital Status</label>
+                                    <select class="required form-control" name="marital_status" id="marital_status" required="required">
+                                    <option value="Single" <?= isset($marital_status) && $marital_status == 'Single' ? 'selected' : '' ?>>Single</option>
+                                    <option value="Married" <?= isset($marital_status) && $marital_status == 'Married' ? 'selected' : '' ?>>Married</option>
+                                    <option value="Widower" <?= isset($marital_status) && $marital_status == 'Widower' ? 'selected' : '' ?>>Widower</option>
+                                    <option value="Widow" <?= isset($marital_status) && $marital_status == 'Widow' ? 'selected' : '' ?>>Widow</option>
+                                    </select>
+                            </div>
+                        </div>
+						<div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="address" class="control-label">Address</label>
+                                    <textarea rows="3" class="required form-control" name="address" id="address" required="required"><?= isset($address) ? $address : "" ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+							</div>
+							
+							
+                            
+							</div>
+							 </fieldset>
+                        
+						
+                        <fieldset class="border px-2 py-2">
+                            <legend class="w-auto mx-3" ><b>Case Details</b></legend>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="crime_ids" class="control-label">Crime Committed</label>
+                                        <select class="required form-control" name="crime_ids" id="crime_ids" required="required" multiple>
+                                            <?php 
+                                            $crimes = $conn->query("SELECT * FROM `crime_list` where delete_flag = 0 and `status` = 1 order by `name` asc ");
+                                            while($row = $crimes->fetch_assoc()):
+                                            ?>
+                                            <option value="<?= $row['id'] ?>" <?= isset($crime_ids) && is_array($crime_ids) && in_array($row['id'], $crime_ids) ? 'selected' : '' ?>><?= $row['name'] ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="sentence" class="control-label">Sentence</label>
+                                        <input type="sentence" class="required form-control" name="sentence" id="sentence" required="required" value="<?= isset($sentence) ? $sentence : "" ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="date_from" class="control-label">Time Serve Start</label>
+                                        <input type="date" class="required form-control" name="date_from" id="date_from" required="required" value="<?= isset($date_from) ? date("Y-m-d", strtotime($date_from)) : "" ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="date_to" class="control-label">Time Serve Ends</label>
+                                        <input type="date" class="required form-control" name="date_to" id="date_to" value="<?= isset($date_to) ? date("Y-m-d", strtotime($date_to)) : "" ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="border px-2 py-2">
+                            <legend class="w-auto mx-3" ><b>Emergency Contact Detials</b></legend>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="emergency_name" class="control-label">Name</label>
+                                        <input type="emergency_name" class="required form-control" name="emergency_name" id="emergency_name" value="<?= isset($emergency_name) ? $emergency_name : "" ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="emergency_relation" class="control-label">Relation</label>
+                                        <input type="text" class="required form-control" name="emergency_relation" id="emergency_relation" value="<?= isset($emergency_relation) ? $emergency_relation : "" ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="emergency_contact" class="control-label">Contact #</label>
+                                        <input type="text" class="required form-control" name="emergency_contact" id="emergency_contact" value="<?= isset($emergency_contact) ? $emergency_contact : "" ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="border px-2 py-2">
+                            <legend class="w-auto mx-3" ><b>Image</b></legend>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Inamate Image</label>
+                                        <div class="custom-file custom-file-sm rounded-0">
+                                            <input type="file" class="custom-file-input rounded-0" id="customFile1" name="img" onchange="displayImg(this)">
+                                            <label class="custom-file-label rounded-0" for="customFile1">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <img src="<?php echo validate_image(isset($image_path) ? $image_path : '') ?>" alt="" id="cimg" class="img-fluid img-thumbnail">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
