@@ -1,0 +1,7 @@
+{
+    "app_id": "application-2-gxqrmrm",
+    "config_version": 20210101,
+    "name": "Application-2",
+    "provider_region": "aws-ap-south-1",
+    "deployment_model": "LOCAL"
+}
