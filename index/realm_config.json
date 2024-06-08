@@ -1,7 +1,7 @@
 {
-    "app_id": "prison-vcejhfp",
+    "app_id": "application-3-bffuhcu",
     "config_version": 20210101,
-    "name": "prison",
+    "name": "Application-3",
     "provider_region": "aws-ap-south-1",
     "deployment_model": "LOCAL"
 }
